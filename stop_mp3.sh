@@ -14,7 +14,10 @@ echo "$current_time 关闭音箱"         >> $log_file_name
 python control_electric_raley.py  0
 
 # 关闭播放程序
-echo "$current_time 关闭 play_mp3.sh" >> $log_file_name
-echo "$current_time 关闭 omplayer"    >> $log_file_name
+echo "$current_time 关闭 play_mp3.sh"         >> $log_file_name
 pkill play_mp3.sh
+echo "$current_time pkill play_mp3.sh $?"    >> $log_file_name
+
+echo "$current_time 关闭 omplayer"            >> $log_file_name
 pkill omxplayer
+echo "$current_time pkill omxplayer   $?"    >> $log_file_name
