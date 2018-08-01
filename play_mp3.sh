@@ -114,8 +114,9 @@ do
         # 从上次关闭程序时所播放的文件处开始继续播放        
         if [[ $play_index -ge $next_play_index ]]; then
             current_time=`date "+%Y_%m_%d %H:%M:%S"`
-            echo "$current_time 播放文件: $play_index, $file_a"  >> $log_file_name
+            echo "$current_time 播放文件: $play_index, $file_a"     >> $log_file_name
 	        omxplayer $file_a
+            echo "$current_time 播放文件: $play_index, $file_a OK"  >> $log_file_name
 
             #保存下一曲编号
             ((play_index++))
