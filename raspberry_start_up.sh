@@ -9,11 +9,19 @@
 current_day=`date "+%Y-%m-%d"`
 current_time=`date "+%Y-%m-%d %H:%M:%S"`
 
-log_file_dir="/home/pi/raspberry_log/reboot_log"
+current_dir=`pwd`
+
+echo $current_dir
+
+log_file_dir="$current_dir/raspberry_log/reboot_log"
 log_file_name="$log_file_dir/reboot_log_$current_day"
 player=omxplayer
-smart_timer_dir="/home/pi/smart_timer"
+smart_timer_dir="$current_dir"
 server_addr="www.baidu.com"
+
+if [[ ! -d $log_file_dir ]];then
+    mkdir -p $log_file_dir
+fi
 
 #获取30天前的日期
 before_day=`date "+%Y-%m-%d" --date="-30 day"`

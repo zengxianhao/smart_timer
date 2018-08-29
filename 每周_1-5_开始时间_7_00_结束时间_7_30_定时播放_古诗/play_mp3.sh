@@ -16,9 +16,16 @@ total_file_cnt=0
 current_day=`date "+%Y-%m-%d"`
 current_time=`date "+%Y-%m-%d %H:%M:%S"`
 
-log_file_dir="/home/pi/raspberry_log/smart_timer_log"
+current_dir=`pwd`
+
+echo $current_dir
+
+log_file_dir="$current_dir/raspberry_log/smart_timer_log"
 log_file_name="$log_file_dir/smart_timer_log_$current_day"
 
+if [[ ! -d $log_file_dir ]] ;then
+    mkdir -p $log_file_dir
+fi
 
 #获取30天前的日期
 before_day=`date "+%Y-%m-%d" --date="-30 day"`
@@ -114,8 +121,9 @@ do
         # 从上次关闭程序时所播放的文件处开始继续播放        
         if [[ $play_index -ge $next_play_index ]]; then
             current_time=`date "+%Y_%m_%d %H:%M:%S"`
-            echo "$current_time 播放文件: $play_index, $file_a"  >> $log_file_name
+            echo "$current_time 播放文件: $play_index, $file_a"     >> $log_file_name
 	        omxplayer $file_a
+            echo "$current_time 播放文件: $play_index, $file_a OK"  >> $log_file_name
 
             #保存下一曲编号
             ((play_index++))

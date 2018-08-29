@@ -6,10 +6,12 @@ from sys import stdin
 from os import walk
 from os.path import join
 
-target_dir   = "/home/pi/smart_timer"
+target_dir   = os.getcwd()
 target_name  = "定时播放"
 do_cmd_usr   = " pi "
 crontab_file = "/etc/crontab"
+
+print target_dir
 
 add_crontab_content = ""
 old_crontab_content = ""

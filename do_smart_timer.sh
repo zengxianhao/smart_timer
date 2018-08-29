@@ -1,8 +1,11 @@
 #!/bin/bash  
-  
+
+
+
+current_dir=`pwd`
 
 u_disk_path="/media/pi"
-dst_root_path="/home/pi/smart_timer"
+dst_root_path="$current_dir"
 
 total_file_size=0
 has_new_file_to_copy=0
@@ -11,11 +14,13 @@ copy_timer_file=0
 
 current_day=`date "+%Y-%m-%d"`
 
-log_file_dir="/home/pi/raspberry_log/smart_timer_log"
+log_file_dir="$current_dir/raspberry_log/smart_timer_log"
 log_file_name="$log_file_dir/smart_timer_log_$current_day"
 u_disk_cnt=0
-#echo $log_file_name
 
+if [[ ! -d $log_file_dir ]] ;then
+    mkdir -p $log_file_dir
+fi
 
 # 查看U盘中是否存在规定格式的文件
 # 如果拷贝已经完成，并且U盘已经移除，将不再定时拷贝并刷新crontab定时任务
@@ -51,7 +56,7 @@ do
                 if [[ -d $dst_root_path/$timer_dir_name ]]; then 
                     python3  baidu_tts.py  "您好，树梅派开始做目录比对，可能比较耗时，请稍等，好"
                     echo "diff -a $src_path $dst_root_path/$timer_dir_name"
-                    #diff -ra $src_path $dst_root_path/$timer_dir_name
+                    diff -ra $src_path $dst_root_path/$timer_dir_name
                     if [[ $? != 0 ]]; then
                         python3  baidu_tts.py  "您好，树梅派发现需要拷贝的定时播放目录，好"
                         has_new_file_to_copy=1
@@ -129,7 +134,9 @@ dist_dir_cnt=0
 # 删除树梅派中的原有播放文件
 for dist_dir_name in ${dst_root_path}/*
 do
-    if [[ -d $dist_dir_name ]];then
+    result=$(echo $dist_dir_name | grep "raspberry_log")
+
+    if [[ -d $dist_dir_name ]] && [[ ! $result ]];then
         dist_dir_cnt=$((dist_dir_cnt+1))
         if [[ $dist_dir_cnt == 1 ]];then
             python3  baidu_tts.py  "您好，树梅派开始删除原有定时播放文件，好"

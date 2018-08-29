@@ -4,7 +4,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 25  6	* * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
 47  6	* * 7	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
 52  6	1 * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
-*/5 *   * * *   root    cd /home/pi/smart_timer && ./do_smart_timer.sh
+
 
 50 6 * * 3-5  pi  cd /home/pi/smart_timer/每周_3-5_开始时间_6_50_结束时间_7_40_定时播放_poetry && ./play_mp3.sh
 40 7 * * 3-5  pi  cd /home/pi/smart_timer && ./stop_mp3.sh

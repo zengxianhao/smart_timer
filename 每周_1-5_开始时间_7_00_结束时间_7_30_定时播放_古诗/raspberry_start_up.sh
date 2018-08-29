@@ -9,11 +9,19 @@
 current_day=`date "+%Y-%m-%d"`
 current_time=`date "+%Y-%m-%d %H:%M:%S"`
 
-log_file_dir="/home/pi/raspberry_log/reboot_log"
+current_dir=`pwd`
+
+echo $current_dir
+
+log_file_dir="$current_dir/raspberry_log/reboot_log"
 log_file_name="$log_file_dir/reboot_log_$current_day"
 player=omxplayer
-smart_timer_dir="/home/pi/smart_timer"
+smart_timer_dir="$current_dir"
 server_addr="www.baidu.com"
+
+if [[ ! -d $log_file_dir ]];then
+    mkdir -p $log_file_dir
+fi
 
 #获取30天前的日期
 before_day=`date "+%Y-%m-%d" --date="-30 day"`
@@ -71,15 +79,15 @@ if [[ $? == 2 ]]; then
         #ilang  树梅派开机成功
         current_time=`date "+%Y-%m-%d %H:%M:%S"`
         echo "$current_time 您好，树梅派开机成功" >> $log_file_name
-        python3  $smart_timer_dir/baidu_tts.py  "您好，树梅派开机成功，哦"
+        python3 $smart_timer_dir/baidu_tts.py  "您好，树梅派开机成功，哦"
 
-        python $smart_timer_dir/read_crontab_time.py
+        python  $smart_timer_dir/read_crontab_time.py
     fi
 
 
 
     current_time=`date "+%Y-%m-%d %H:%M:%S"`
-    python $smart_timer_dir/ncontrol_electric_raley.py  0
+    python $smart_timer_dir/control_electric_raley.py  0
     echo "$current_time 树梅派开机 关闭音箱" >> $log_file_name
 else
     current_time=`date "+%Y-%m-%d %H:%M:%S"`
