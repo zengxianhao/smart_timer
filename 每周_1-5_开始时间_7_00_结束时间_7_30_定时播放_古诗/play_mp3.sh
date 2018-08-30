@@ -20,7 +20,7 @@ current_dir=`pwd`
 
 echo $current_dir
 
-log_file_dir="$current_dir/raspberry_log/smart_timer_log"
+log_file_dir="$current_dir/../raspberry_log/smart_timer_log"
 log_file_name="$log_file_dir/smart_timer_log_$current_day"
 
 if [[ ! -d $log_file_dir ]] ;then
