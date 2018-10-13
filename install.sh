@@ -4,6 +4,15 @@ chmod -R 755 *
 
 current_dir=`pwd`
 
+for file_a in $current_dir/*
+do
+    result=$(echo $file_a | egrep "每周")
+    if [[ "$result" != "" ]]; then
+        cp play_mp3.sh $file_a
+    fi
+done
+
+
 echo "install omxplayer"
 apt-get install omxplayer
 
