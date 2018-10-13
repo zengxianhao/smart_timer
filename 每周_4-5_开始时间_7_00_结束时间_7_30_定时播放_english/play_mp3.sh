@@ -23,11 +23,22 @@ current_dir=`pwd`
 log_file_dir="$current_dir/../raspberry_log/smart_timer_log"
 log_file_name="$log_file_dir/smart_timer_log_$current_day"
 
-
-
+# 创建日志目录
 if [[ ! -d $log_file_dir ]] ;then
     mkdir -p $log_file_dir
 fi
+
+# 法定节假日停止播放音乐
+python check_holiday.py
+
+if [[ 2 == $? ]]; then
+    current_time=`date "+%Y-%m-%d %H:%M:%S"`
+    echo "$current_time 法定节假日停止播放音乐" >> $log_file_name
+    exit
+fi
+
+
+
 
 #echo "log_file_name = $log_file_name"
 

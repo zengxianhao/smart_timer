@@ -21,3 +21,4 @@ if (int(ct1) == 0):
 if (int(ct1) == 1):
     GPIO.setup(pin, GPIO.OUT)
     GPIO.output(pin,GPIO.LOW)
+

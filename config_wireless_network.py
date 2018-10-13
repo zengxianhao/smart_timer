@@ -41,9 +41,9 @@ def modify_wpa_supplicant(network_config_file_2):
     file_content=""
     for line in file_handle.readlines():
         if re.search("ssid=", line):
-            file_content += "       ssid=%s\n" %(ssid)
+            file_content += "       ssid=\"%s\"\n" %(ssid)
         elif re.search("psk=", line):
-            file_content += "       psk=%s\n" %(psk)
+            file_content += "       psk=\"%s\"\n" %(psk)
         else:
             file_content += line
     file_handle.close()

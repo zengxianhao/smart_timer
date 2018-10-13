@@ -31,20 +31,24 @@ before_day_time_stamp=`date -d "$before_day" +%s`
 # 删除一个月以前的历史日志，防止日志占满flash空间
 for file_a in $log_file_dir/*
 do
-    result=$(echo $file_a | egrep "$log_file_dir/reboot_log_[0-9]+\-[0-9]+\-[0-9]+")
+    result=$(echo $file_a | egrep "$log_file_dir/smart_timer_log_[0-9]+\-[0-9]+\-[0-9]+")
     if [[ "$result" != "" ]]; then
-        #echo $file_a
-        split_file_name=`echo $file_a          | cut -d "/" -f6`
-        split_file_name=`echo $split_file_name | cut -d "_" -f4`
-        #echo $split_file_name
-        # 历史日志文件对应的时间戳
-        log_file_time_stamp=`date -d "$split_file_name" +%s` 
+        #echo "file_a = $file_a"
+        log_file=`basename $file_a`        
+        #echo $log_file
+        log_file_time=`echo $log_file | cut -d "_" -f4`
+        #echo $log_file_time
 
+        # 历史日志文件对应的时间戳
+        log_file_time_stamp=`date -d "$log_file_time" +%s` 
+
+        #echo "before_day_time_stamp = $before_day_time_stamp log_file_time_stamp = $log_file_time_stamp"
         # 删除一个月以前的历史日志
         if [[ $before_day_time_stamp -gt $log_file_time_stamp ]]; then
             #echo "$before_day > $split_file_name"
             current_time=`date "+%Y-%m-%d %H:%M:%S"`
-            echo "$current_time 删除一个月以前的历史日志 $file_a"           >>  $log_file_name 
+            echo "$current_time  before_day_time_stamp = $before_day_time_stamp log_file_time_stamp = $log_file_time_stamp"   >>  $log_file_name 
+            echo "$current_time 删除一个月以前的历史日志 $file_a"                                                                >>  $log_file_name 
             rm -fr $file_a
         fi
     fi

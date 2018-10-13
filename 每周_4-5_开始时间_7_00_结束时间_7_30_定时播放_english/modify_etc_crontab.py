@@ -6,10 +6,12 @@ from sys import stdin
 from os import walk
 from os.path import join
 
-target_dir   = "/home/pi/smart_timer"
+target_dir   = os.getcwd()
 target_name  = "定时播放"
 do_cmd_usr   = " pi "
 crontab_file = "/etc/crontab"
+
+#print target_dir
 
 add_crontab_content = ""
 old_crontab_content = ""
@@ -36,22 +38,22 @@ for root, dirs, files in walk(target_dir):
                 start_time = result.group(4)
                 end_time   = result.group(6)
 
-                print week
-                print start_time
-                print end_time
+                #print week
+                #print start_time
+                #print end_time
 
                 week = week.replace("_", ",")
-                print "week = %s" %(week)
+                #print "week = %s" %(week)
 
                 # 组织定时启动命令
                 start_time_hour   = start_time.split('_')[0]
                 start_time_minute = start_time.split('_')[1]
-                print "start_time_hour = %s, start_time_minute = %s" %(start_time_hour, start_time_minute)
+                #print "start_time_hour = %s, start_time_minute = %s" %(start_time_hour, start_time_minute)
 
-                start_cmd = "cd %s && ./play_mp3.sh" %(full_dir_name)
-                print start_cmd
+                start_cmd = "cd %s && sudo ./play_mp3.sh" %(full_dir_name)
+                #print start_cmd
                 start_crontab = "%s %s * * %s %s %s\n" %(start_time_minute, start_time_hour, week, do_cmd_usr, start_cmd)
-                print start_crontab
+                #print start_crontab
 
                 add_crontab_content = add_crontab_content + start_crontab
 
@@ -59,12 +61,12 @@ for root, dirs, files in walk(target_dir):
                 end_time_hour   = end_time.split('_')[0]
                 end_time_minute = end_time.split('_')[1]
 
-                print "end_time_hour = %s, end_time_minute = %s" %(end_time_hour, end_time_minute)
+                #print "end_time_hour = %s, end_time_minute = %s" %(end_time_hour, end_time_minute)
 
-                stop_cmd = "cd %s && ./stop_mp3.sh" %(target_dir)
-                print stop_cmd
+                stop_cmd = "cd %s && sudo ./stop_mp3.sh" %(target_dir)
+                #print stop_cmd
                 stop_crontab = "%s %s * * %s %s %s\n" %(end_time_minute, end_time_hour, week, do_cmd_usr, stop_cmd)
-                print stop_crontab
+                #print stop_crontab
 
                 add_crontab_content = add_crontab_content + stop_crontab
 
@@ -89,9 +91,9 @@ old_crontab_content = old_crontab_content + "\n"
 file_handle.close()
      
 
-print old_crontab_content
+#print old_crontab_content
 #print "+++++++++++++++++++++++++"
-print add_crontab_content
+#print add_crontab_content
 
 
 file_handle = open(crontab_file,'w')

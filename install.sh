@@ -8,7 +8,8 @@ for file_a in $current_dir/*
 do
     result=$(echo $file_a | egrep "每周")
     if [[ "$result" != "" ]]; then
-        cp play_mp3.sh $file_a
+        cp *.sh $file_a
+        cp *.py $file_a
     fi
 done
 
