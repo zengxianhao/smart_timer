@@ -20,6 +20,7 @@ def check_holiday(date):
 
 if __name__ == '__main__':
     date = datetime.datetime.now().strftime('%Y%m%d')
+    #date = "20180930"
     retval = check_holiday(date)
     sys.exit(retval)
 

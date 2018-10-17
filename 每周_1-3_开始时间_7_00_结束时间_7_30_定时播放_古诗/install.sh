@@ -4,10 +4,17 @@ chmod -R 755 *
 
 current_dir=`pwd`
 
+sudo python config_wireless_network.py
+
 for file_a in $current_dir/*
 do
     result=$(echo $file_a | egrep "每周")
     if [[ "$result" != "" ]]; then
+
+        rm -fr $file_a/play_index.txt
+        rm -fr $file_a/play_total_file.txt
+        rm -fr $file_a/raspberry_log
+
         cp *.sh $file_a
         cp *.py $file_a
     fi
